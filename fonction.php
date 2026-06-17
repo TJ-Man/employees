@@ -121,6 +121,23 @@ function getEmployelepluslong($id){
     return $result;
 
 }
+function getInfoSalaire(){
+    $db=dbconnect();
+    $sql=" SELECT
+    sum(employees.gender = 'M') as hommes, sum(employees.gender = 'F') as femmes,title,avg(salaries.salary) as salaire 
+    FROM titles 
+    JOIN employees ON employees.emp_no = titles.emp_no 
+    JOIN salaries ON employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01'
+    GROUP BY titles.title ORDER BY titles.title";
+    $req=mysqli_query($db,$sql);
+    $result = array();
+    while ($res = mysqli_fetch_assoc($req)) {
+        $result[] = $res;
+    }
+
+    mysqli_free_result($req);
+    return $result;
+}
 
 
 ?>
