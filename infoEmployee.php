@@ -64,16 +64,18 @@ $EmploiLong=getEmployelepluslong($id);
         <?php } ?>
                 
         </table>
-        <div class="btn btn-success">
-             <a class="nav-link" href="changerdepart.php?num=<?= $id?>">Changer de departements</a>
-            
-        </div>
-        <br>
-        <br>
 
+        <div class="btn btn-success">
+            <a class="nav-link" href="DevenirManager.php?num=<?= $id ?>">Devenir Manager</a>
+        </div>
+
+        <div class="btn btn-success">
+            <a class="nav-link" href="changerdepart.php?num=<?= $id ?>">Changer de departement</a>
+        </div>
         <div class="btn btn-primary">
             <a class="nav-link" href="index.php">Retour</a>
         </div>
+
     </div>
     
 </body>

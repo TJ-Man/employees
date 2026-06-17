@@ -121,6 +121,7 @@ function getEmployelepluslong($id){
     return $result;
 
 }
+
 function getInfoSalaire(){
     $db=dbconnect();
     $sql=" SELECT
@@ -136,6 +137,50 @@ function getInfoSalaire(){
     }
 
     mysqli_free_result($req);
+    return $result;
+}
+function getDeptActuel($num){
+    $db = dbconnect();
+    
+    $sql = "SELECT dept_emp.dept_no, departments.dept_name
+            FROM dept_emp
+            JOIN departments ON departments.dept_no = dept_emp.dept_no
+            WHERE dept_emp.emp_no = $num AND dept_emp.to_date = '9999-01-01'";
+            
+    $req = mysqli_query($db, $sql);
+    $result = mysqli_fetch_assoc($req); 
+    
+    return $result;
+}
+function setNouveauManager($dept_no, $ancien_emp_no, $nouveau_emp_no, $date_debut){
+    $db = dbconnect();
+    
+    if ($ancien_emp_no !== null) {
+        $sql1 = "UPDATE dept_manager SET to_date = '$date_debut' 
+                 WHERE emp_no = $ancien_emp_no AND dept_no = '$dept_no' AND to_date = '9999-01-01'";
+        mysqli_query($db, $sql1);
+    }
+ 
+    $sql2 = "INSERT INTO dept_manager (emp_no, dept_no, from_date, to_date)
+             VALUES ($nouveau_emp_no, '$dept_no', '$date_debut', '9999-01-01')
+             ON DUPLICATE KEY UPDATE from_date = '$date_debut', to_date = '9999-01-01'";
+             
+    $resultat = mysqli_query($db, $sql2);
+ 
+
+    return $resultat; 
+}
+function getManagerActuel($dept_no){
+    $db = dbconnect();
+    
+    $sql = "SELECT dm.emp_no, dm.from_date, e.first_name, e.last_name
+            FROM dept_manager dm
+            JOIN employees e ON e.emp_no = dm.emp_no
+            WHERE dm.dept_no = '$dept_no' AND dm.to_date = '9999-01-01'";
+            
+    $req = mysqli_query($db, $sql);
+    $result = mysqli_fetch_assoc($req); 
+    
     return $result;
 }
 function getNomDepart(){
