@@ -108,6 +108,19 @@ function getRecherche($depart,$nom,$min,$max,$limit){
     return $result;
 
 }
+function getEmployelepluslong($id){
+    $db=dbconnect();
+    $sql="SELECT * ,YEAR(to_date)-YEAR(from_date) as duree FROM titles WHERE emp_no='$id' ORDER BY duree DESC LIMIT 1";
+    $req=mysqli_query($db,$sql);
+    $result = array();
+    while ($res = mysqli_fetch_assoc($req)) {
+        $result[] = $res;
+    }
+
+    mysqli_free_result($req);
+    return $result;
+
+}
 
 
 ?>

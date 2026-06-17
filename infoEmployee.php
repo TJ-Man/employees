@@ -3,6 +3,7 @@ include('fonction.php');
 $id=$_GET['num'];
 $info =getInfoEmployee($id);
 $histo = getHistoriqueSalaire($id);
+$EmploiLong=getEmployelepluslong($id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,18 +24,22 @@ $histo = getHistoriqueSalaire($id);
                 <th>last_name</th>
                 <th>gender</th>
                 <th>hire_date </th>
+                <th>Emploi le plus long duree</th>
+                <th>Emploi le plus long</th>
             </tr>
-        <?php foreach($info as $depart){?>
+        <?php foreach($info as $depart){ ?>
             <tr>
                 <td><?= $id ?></td>
+                <td><?= $depart['birth_date']?></td>
                 <td><?= $depart['first_name']?></td>
                 <td><?= $depart['last_name']?></td>
                 <td><?= $depart['gender']?></td>
-                <td><?= $depart['birth_date']?></td>
                 <td><?= $depart['hire_date']?></td>
+                <td><?= $EmploiLong[0]['duree']?></td>
+                <td><?= $EmploiLong[0]['title']?></td>
             </tr>
-                
         <?php } ?>
+                
                 
         </table>
         <h2>Historique du salaire</h2>
