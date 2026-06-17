@@ -52,6 +52,10 @@ $departements =getDepartements();
                 
                 <?php } ?>
             </table>
+                    <div class="btn btn-primary">
+               <a  class="nav-link" href="InfoSalaire.php">Informations des salaires par emploi</a>
+       </div>
+
             
     </div>
 </body>
