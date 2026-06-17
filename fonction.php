@@ -138,6 +138,54 @@ function getInfoSalaire(){
     mysqli_free_result($req);
     return $result;
 }
+function getNomDepart(){
+    $db=dbconnect();
+    $sql=" SELECT
+    *FROM departments";
+    $req=mysqli_query($db,$sql);
+    $result = array();
+    while ($res = mysqli_fetch_assoc($req)) {
+        $result[] = $res;
+    }
 
+    mysqli_free_result($req);
+    return $result;
+
+}
+function getDepartementActuel($id) {
+    $db = dbconnect();
+    $sql = "SELECT d.dept_no, d.dept_name, de.from_date 
+            FROM dept_emp de
+            JOIN departments d ON de.dept_no = d.dept_no
+            WHERE de.emp_no = '$id'
+            AND de.to_date = '9999-01-01' 
+            LIMIT 1";
+            
+    $req = mysqli_query($db, $sql);
+    $result = mysqli_fetch_assoc($req);
+    
+    mysqli_free_result($req);
+    return $result;
+}
+
+function modifierDepartementEmployee($id, $new_dept, $date) {
+    $db = dbconnect();
+    $sql_update = "UPDATE dept_emp 
+                   SET to_date = '$date' 
+                   WHERE emp_no = '$id' 
+                   AND to_date = '9999-01-01'";
+    
+    $req_update = mysqli_query($db, $sql_update);
+
+    $sql_insert = "INSERT INTO dept_emp (emp_no, dept_no, from_date, to_date) 
+                   VALUES ('$id', '$new_dept', '$date', '9999-01-01')";
+                   
+    $req_insert = mysqli_query($db, $sql_insert);
+    if($req_update && $req_insert) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 ?>
